@@ -1,17 +1,19 @@
 import { useReducer } from 'react';
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
 import { z } from 'zod';
+import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldForm } from '@/components';
 import { useNavigationTransitionConfirmation } from '@/components/navigation-transition-confirmation';
 import { createEmailValidator } from '@/utils/validation';
 import FormAccordion from './form-accordion';
 import FormDivider from './form-divider';
 import ProfileEmailVerifyDialog from './profile-email-verify-dialog';
-import supabase from '@/api/supabase-client';
 
 const ProfileEmail = () => {
   const intl = useIntl();
@@ -25,11 +27,29 @@ const ProfileEmail = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const updateProfile = async (value: { email: string }) => {
-    const { data, error } = await supabase.auth.updateUser({
-      email: value.email,
-    });
-  };
+  const useUpdateProfileEmail = useMutation({
+    mutationFn: async (data: FormData) => {
+      const { error } = await supabase.auth.updateUser({
+        email: data.email,
+      });
+
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: (_, variables) => {
+      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccessTitle' }), {
+        variant: 'success',
+      });
+      form.reset(variables);
+    },
+    onError: () => {
+      enqueueSnackbar(intl.$t({ id: 'Error.CommonError' }), {
+        variant: 'error',
+        persist: true,
+      });
+    },
+  });
 
   const isEditing = form.formState.isDirty;
   useNavigationTransitionConfirmation(isEditing);
@@ -52,7 +72,7 @@ const ProfileEmail = () => {
             type="button"
             onClick={toggleIsVerifyEmailDialogOpen}
           >
-            {intl.$t({ id: 'Profile.VerifyEmailAction' })}
+            <FormattedMessage id="Profile.VerifyEmailAction" />
           </AppButton>
         </div>
       </div>
@@ -61,9 +81,10 @@ const ProfileEmail = () => {
         <AppButton
           color="003"
           disabled={!isEditing}
-          onClick={form.handleSubmit((values: FormData) => updateProfile(values))}
+          loading={useUpdateProfileEmail.isLoading}
+          onClick={form.handleSubmit((values: FormData) => useUpdateProfileEmail.mutate(values))}
         >
-          {intl.$t({ id: 'Common.SaveChanges' })}
+          <FormattedMessage id="Common.SaveChanges" />
         </AppButton>
       </div>
     </FormAccordion>

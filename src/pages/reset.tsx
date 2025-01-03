@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { twJoin } from 'tailwind-merge';
 import { z } from 'zod';
+import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldFormPassword } from '@/components';
 import PublicContainer from '@/components/public-container';
-import { createPasswordValidator } from '@/utils/validation';
-import supabase from '@/api/supabase-client';
 import { useLogout } from '@/hooks';
+import { createPasswordValidator } from '@/utils/validation';
 
 const Reset = () => {
   const intl = useIntl();
@@ -19,7 +19,7 @@ const Reset = () => {
   const useResetPassword = useMutation({
     mutationFn: async (password: FormData['password']) => {
       if (token !== 'super_secret_token') {
-        throw Error;
+        throw new Error('Invalid token');
       }
 
       const { error } = await supabase.auth.updateUser({ password });
@@ -56,17 +56,23 @@ const Reset = () => {
           />
           <div className="mb-6 flex flex-col items-center gap-2.5">
             <PublicContainer.Title className="whitespace-pre-line text-center">
-              {intl.$t({ id: useResetPassword.isError ? 'Reset.TitleError' : 'Reset.TitleSuccess' })}
+              <FormattedMessage id={useResetPassword.isError ? 'Reset.TitleError' : 'Reset.TitleSuccess'} />
             </PublicContainer.Title>
             {useResetPassword.isError && (
-              <p className="text-center text-gray-300">{intl.$t({ id: 'Reset.DescriptionError' })}</p>
+              <p className="text-center text-gray-300">
+                <FormattedMessage id="Reset.DescriptionError" />
+              </p>
             )}
           </div>
         </>
       ) : (
         <>
-          <PublicContainer.Title className="mb-3">{intl.$t({ id: 'Reset.Title' })}</PublicContainer.Title>
-          <p className="mb-8 text-gray-600">{intl.$t({ id: 'Reset.Description' })}</p>
+          <PublicContainer.Title className="mb-3">
+            <FormattedMessage id="Reset.Title" />
+          </PublicContainer.Title>
+          <p className="mb-8 text-gray-600">
+            <FormattedMessage id="Reset.Description" />
+          </p>
           <AppTextFieldFormPassword
             className="mb-5"
             control={form.control}
@@ -79,7 +85,7 @@ const Reset = () => {
             loading={useResetPassword.isLoading}
             type="submit"
           >
-            {intl.$t({ id: 'Reset.ChangePassword' })}
+            <FormattedMessage id="Reset.ChangePassword" />
           </AppButton>
         </>
       )}
@@ -87,7 +93,7 @@ const Reset = () => {
         className="self-center text-center font-semibold text-primary-500 no-underline"
         to={useResetPassword.isError ? '/forgotten' : '/login'}
       >
-        {intl.$t({ id: useResetPassword.isError ? 'Reset.GoToReset' : 'Reset.GoToLoginPage' })}
+        <FormattedMessage id={useResetPassword.isError ? 'Reset.GoToReset' : 'Reset.GoToLoginPage'} />
       </Link>
     </PublicContainer>
   );

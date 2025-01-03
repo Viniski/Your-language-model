@@ -1,13 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
 import { z } from 'zod';
+import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldFormPassword } from '@/components';
 import { useNavigationTransitionConfirmation } from '@/components/navigation-transition-confirmation';
 import { createPasswordValidator } from '@/utils/validation';
 import FormAccordion from './form-accordion';
 import FormDivider from './form-divider';
-import supabase from '@/api/supabase-client';
 
 const FormPassword = () => {
   const intl = useIntl();
@@ -22,11 +24,29 @@ const FormPassword = () => {
   const isEditing = form.formState.isDirty;
   useNavigationTransitionConfirmation(isEditing);
 
-  const updateProfile = async (value: { newPassword: string }) => {
-    const { data, error } = await supabase.auth.updateUser({
-      password: value.newPassword,
-    });
-  };
+  const useUpdateProfilePassword = useMutation({
+    mutationFn: async (data: FormData) => {
+      const { error } = await supabase.auth.updateUser({
+        password: data.newPassword,
+      });
+
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: (_, variables) => {
+      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccessTitle' }), {
+        variant: 'success',
+      });
+      form.reset(variables);
+    },
+    onError: () => {
+      enqueueSnackbar(intl.$t({ id: 'Error.CommonError' }), {
+        variant: 'error',
+        persist: true,
+      });
+    },
+  });
 
   return (
     <FormAccordion title={intl.$t({ id: 'Profile.PasswordTitle' })} titleBarClassName="bg-004">
@@ -40,8 +60,13 @@ const FormPassword = () => {
       </div>
       <FormDivider />
       <div className="flex justify-end">
-        <AppButton color="003" disabled={!isEditing} loading={false} onClick={form.handleSubmit(updateProfile)}>
-          {intl.$t({ id: 'Common.SaveChanges' })}
+        <AppButton
+          color="003"
+          disabled={!isEditing}
+          loading={useUpdateProfilePassword.isLoading}
+          onClick={form.handleSubmit((values) => useUpdateProfilePassword.mutate(values))}
+        >
+          <FormattedMessage id="Common.SaveChanges" />
         </AppButton>
       </div>
     </FormAccordion>

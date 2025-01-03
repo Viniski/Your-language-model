@@ -6,11 +6,10 @@ import { FormControlLabel } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { twJoin } from 'tailwind-merge';
 import { z } from 'zod';
-import { AppButton, AppCheckbox, AppTextFieldForm, AppTextFieldFormPassword } from '@/components';
-import { createEmailValidator, createPasswordValidator, createSimpleStringValidator } from '@/utils/validation';
 import supabase from '@/api/supabase-client';
+import { AppButton, AppCheckbox, AppTextFieldForm, AppTextFieldFormPassword } from '@/components';
 import PublicContainer from '@/components/public-container';
-import RegisterGdpr from '@/components/register-gdpr';
+import { createEmailValidator, createPasswordValidator, createSimpleStringValidator } from '@/utils/validation';
 
 const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string; hasLoginLink?: boolean }) => {
   const intl = useIntl();
@@ -55,7 +54,7 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
 
   const useRegisterUser = useMutation({
     mutationFn: async (values: FormData) =>
-      await supabase.auth
+      supabase.auth
         .signUp({
           email: values.email,
           password: values.password,
@@ -102,10 +101,14 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
   return (
     <>
       <PublicContainer className="gap-8">
-        <PublicContainer.Title>{intl.$t({ id: 'Register.Title' })}</PublicContainer.Title>
+        <PublicContainer.Title>
+          <FormattedMessage id="Register.Title" />
+        </PublicContainer.Title>
         <form className="flex flex-col gap-8" onSubmit={form.handleSubmit((data) => useRegisterUser.mutate(data))}>
           <div className="flex flex-col gap-4">
-            <h2 className="font-semibold">{intl.$t({ id: 'Register.ProfileDataTitle' })}</h2>
+            <h2 className="font-semibold">
+              <FormattedMessage id="Register.ProfileDataTitle" />
+            </h2>
             <div className="flex flex-col gap-4 md:gap-6">
               <AppTextFieldForm
                 autoFocus
@@ -123,7 +126,9 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <h2 className="font-semibold">{intl.$t({ id: 'Register.LoginDataTitle' })}</h2>
+            <h2 className="font-semibold">
+              <FormattedMessage id="Register.LoginDataTitle" />
+            </h2>
             <div className="flex flex-col gap-4 md:gap-6">
               <AppTextFieldForm
                 control={form.control}
@@ -173,7 +178,9 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
                       }
                     />
                     {fieldState.invalid && (
-                      <p className="ml-8 text-xs text-error">{intl.$t({ id: 'Form.FieldRequired' })}</p>
+                      <p className="ml-8 text-xs text-error">
+                        <FormattedMessage id="Form.FieldRequired" />
+                      </p>
                     )}
                   </>
                 )}
@@ -185,15 +192,18 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
           </AppButton>
           {hasLoginLink && (
             <div className="self-center text-gray-600">
-              {intl.$t({ id: 'Register.HaveAnAccount' })}&nbsp;
+              <FormattedMessage id="Register.HaveAnAccount" />
+              &nbsp;
               <Link className="self-center font-semibold text-primary-500 no-underline" to="/">
-                {intl.$t({ id: 'Common.LogIn' })}
+                <FormattedMessage id="Common.LogIn" />
               </Link>
             </div>
           )}
         </form>
       </PublicContainer>
-      <RegisterGdpr />
+      <div className="m-auto max-w-5xl text-center text-sm text-white">
+        <FormattedMessage id="Register.Gdpr" />
+      </div>
     </>
   );
 };

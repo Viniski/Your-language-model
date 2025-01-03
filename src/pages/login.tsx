@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useSearchParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -26,7 +26,9 @@ const Login = () => {
 
   return (
     <PublicContainer className="gap-8" onSubmit={form.handleSubmit((data) => useLoginUser.mutate(data))}>
-      <PublicContainer.Title>{intl.$t({ id: 'Login.Title' })}</PublicContainer.Title>
+      <PublicContainer.Title>
+        <FormattedMessage id="Login.Title" />
+      </PublicContainer.Title>
       <div className="flex flex-col gap-6">
         {useLoginUser.isError && (
           <AppError errorMessage={errorsMessage[useLoginUser.error as 'invalid_credentials' | 'email_not_confirmed']} />
@@ -47,15 +49,16 @@ const Login = () => {
         />
       </div>
       <Link className="self-end font-semibold text-primary-500 no-underline" to="/forgotten">
-        {intl.$t({ id: 'Login.ForgotPassword' })}
+        <FormattedMessage id="Login.ForgotPassword" />
       </Link>
       <AppButton className="rounded-xl !py-4 !text-base" loading={useLoginUser.isLoading} type="submit">
-        {intl.$t({ id: 'Common.LogIn' })}
+        <FormattedMessage id="Common.LogIn" />
       </AppButton>
       <div className="self-center text-gray-600">
-        {intl.$t({ id: 'Login.DoNotHaveAnAccount' })}&nbsp;
+        <FormattedMessage id="Login.DoNotHaveAnAccount" />
+        &nbsp;
         <Link className="self-center font-semibold text-primary-500 no-underline" to="/register">
-          {intl.$t({ id: 'Common.Register' })}
+          <FormattedMessage id="Common.Register" />
         </Link>
       </div>
     </PublicContainer>

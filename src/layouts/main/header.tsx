@@ -1,16 +1,12 @@
 import { Link } from 'react-router-dom';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton } from '@mui/material';
 import { AppLogo } from '@/components';
+import { NullableUser } from '@/types';
 
-interface Props {
-  user: { first_name: string; last_name: string; organization: string; phone: string; language: 'pl' | 'en' }| null | undefined;
-  toggleNavigation: () => void;
-}
-
-const Header = ({ user, toggleNavigation }: Props) => (
+const Header = ({ user, toggleNavigation }: { user: NullableUser; toggleNavigation: () => void }) => (
   <header className="flex min-h-[--app-header-height] items-center justify-between border-b border-[--border-primary] bg-[--bg-primary] px-8">
     <IconButton className="-ml-2 md:hidden" onClick={toggleNavigation}>
       <FontAwesomeIcon icon={faBars} />

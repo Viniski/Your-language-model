@@ -16,7 +16,7 @@ const Components = {
 const AppContextsProvider = ({ children }: ChildrenProps) => (
   <IntlProvider>
     <ThemeProvider>
-      <SnackbarProvider autoHideDuration={5000} Components={Components} variant="success">
+      <SnackbarProvider autoHideDuration={3000} Components={Components} variant="success">
         <QueryClientProvider>{children}</QueryClientProvider>
       </SnackbarProvider>
     </ThemeProvider>

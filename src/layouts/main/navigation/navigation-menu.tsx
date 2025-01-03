@@ -1,17 +1,13 @@
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { faMap, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemButton } from '@mui/material';
 import { useIsMobile, useLogout } from '@/hooks';
+import { NullableUser } from '@/types';
 
-interface Props {
-  user: { first_name: string; last_name: string; organization: string; phone: string; language: 'pl' | 'en' }| null | undefined;
-  toggleNavigation: () => void;
-}
-
-const NavigationMenu = ({ user, toggleNavigation }: Props) => {
+const NavigationMenu = ({ user, toggleNavigation }: { user: NullableUser; toggleNavigation: () => void }) => {
   const intl = useIntl();
   const isMobile = useIsMobile();
   const logout = useLogout();
@@ -56,7 +52,7 @@ const NavigationMenu = ({ user, toggleNavigation }: Props) => {
         <div className="mb-10 border-b border-gray-400/20 md:hidden" />
         <ListItemButton className="flex items-center gap-3 rounded-md px-5 py-3 text-gray-500" onClick={onLogoutClick}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} size="lg" />
-          {intl.$t({ id: 'Nav.Logout' })}
+          <FormattedMessage id="Nav.Logout" />
         </ListItemButton>
       </div>
     </nav>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Outlet } from 'react-router-dom';
 import dayjs from 'dayjs';
 import NavigationTransitionConfirmation from '@/components/navigation-transition-confirmation';
@@ -25,9 +25,9 @@ const Main = () => {
       <Header toggleNavigation={toggleNavigation} user={currentUserQuery.data} />
       <div className="flex h-full overflow-hidden">
         <Navigation
-          user={currentUserQuery.data}
           isNavigationOpen={isNavigationOpen}
           toggleNavigation={toggleNavigation}
+          user={currentUserQuery.data}
         />
         <div className="flex h-full w-full flex-col overflow-auto bg-[--bg-secondary]">
           <main className="flex grow-[1] flex-col px-6 py-14 md:px-8 md:py-10">
@@ -40,7 +40,7 @@ const Main = () => {
               rel="noreferrer"
               target="_blank"
             >
-              {intl.$t({ id: 'Footer.Title' }, { currentYear: dayjs().year() })}
+              <FormattedMessage id="Footer.Title" values={{ currentYear: dayjs().year() }} />
             </a>
           </footer>
         </div>

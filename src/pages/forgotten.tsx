@@ -3,22 +3,19 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useSearchParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { enqueueSnackbar } from 'notistack';
 import { twJoin } from 'tailwind-merge';
 import { z } from 'zod';
+import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldForm } from '@/components';
 import PublicContainer from '@/components/public-container';
 import { createEmailValidator } from '@/utils/validation';
-import supabase from '@/api/supabase-client';
-import { useEffect } from 'react';
 
 const Forgotten = () => {
   const intl = useIntl();
   const [searchParams] = useSearchParams();
   const useRemindPassword = useMutation({
     mutationFn: async (email: string) =>
-      await supabase.auth.resetPasswordForEmail(email, {
+      supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'http://localhost:3000/reset/super_secret_token',
       }),
   });
@@ -44,10 +41,10 @@ const Forgotten = () => {
             width={262}
           />
           <PublicContainer.Title className="mb-2.5">
-            {intl.$t({ id: 'Forgotten.EmailSentTitle' })}
+            <FormattedMessage id="Forgotten.EmailSentTitle" />
           </PublicContainer.Title>
           <p className="mb-6 flex flex-col items-center text-center text-gray-600">
-            {intl.$t({ id: 'Forgotten.EmailSentDescription' })}
+            <FormattedMessage id="Forgotten.EmailSentDescription" />
             <span className="font-bold text-primary-900">{form.getValues('email')}</span>
           </p>
           <Link className="self-center font-semibold text-primary-500 no-underline" to="/">
@@ -56,8 +53,12 @@ const Forgotten = () => {
         </>
       ) : (
         <>
-          <PublicContainer.Title className="mb-3">{intl.$t({ id: 'Forgotten.Title' })}</PublicContainer.Title>
-          <p className="mb-8 text-gray-600">{intl.$t({ id: 'Forgotten.Description' })}</p>
+          <PublicContainer.Title className="mb-3">
+            <FormattedMessage id="Forgotten.Title" />
+          </PublicContainer.Title>
+          <p className="mb-8 text-gray-600">
+            <FormattedMessage id="Forgotten.Description" />
+          </p>
           <AppTextFieldForm
             className="mb-5"
             control={form.control}
@@ -70,12 +71,13 @@ const Forgotten = () => {
             loading={useRemindPassword.isLoading}
             type="submit"
           >
-            {intl.$t({ id: 'Forgotten.ResetPassword' })}
+            <FormattedMessage id="Forgotten.ResetPassword" />
           </AppButton>
           <div className="mt-8 self-center text-gray-600">
-            {intl.$t({ id: 'Forgotten.RememberPassword' })}&nbsp;
+            <FormattedMessage id="Forgotten.RememberPassword" />
+            &nbsp;
             <Link className="self-center font-semibold text-primary-500 no-underline" to="/">
-              {intl.$t({ id: 'Common.LogIn' })}
+              <FormattedMessage id="Common.LogIn" />
             </Link>
           </div>
         </>

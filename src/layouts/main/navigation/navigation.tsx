@@ -1,12 +1,7 @@
 import { Drawer, SwipeableDrawer } from '@mui/material';
 import { useIsMobile } from '@/hooks';
+import { NullableUser } from '@/types';
 import NavigationMenu from './navigation-menu';
-
-interface Props {
-  user: { first_name: string; last_name: string; organization: string; phone: string; language: 'pl' | 'en' } | null | undefined;
-  isNavigationOpen: boolean;
-  toggleNavigation: () => void;
-}
 
 const ModalProps = { keepMounted: true };
 
@@ -26,7 +21,15 @@ const swipeableDrawerComponentsProps = {
   },
 };
 
-const Navigation = ({ user, isNavigationOpen, toggleNavigation }: Props) => {
+const Navigation = ({
+  user,
+  isNavigationOpen,
+  toggleNavigation,
+}: {
+  user: NullableUser;
+  isNavigationOpen: boolean;
+  toggleNavigation: () => void;
+}) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
