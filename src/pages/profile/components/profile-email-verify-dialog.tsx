@@ -1,12 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { AppButton, AppDialog } from '@/components';
 
-interface Props {
-  open: boolean;
-  onClose: () => void;
-}
-
-const ProfileEmailVerifyDialog = ({ open, onClose }: Props) => (
+const ProfileEmailVerifyDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
   <AppDialog.Container open={open}>
     <AppDialog.Title onClose={onClose}>
       <FormattedMessage id="Profile.VerifyEmailDialogTitle" />

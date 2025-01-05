@@ -13,3 +13,5 @@ export interface User {
 }
 
 export type NullableUser = User | null | undefined;
+
+export type MessageType = { role: 'user' | 'assistant'; content: string };

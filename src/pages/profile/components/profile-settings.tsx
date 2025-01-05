@@ -7,7 +7,6 @@ import { z } from 'zod';
 import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldForm } from '@/components';
 import { useNavigationTransitionConfirmation } from '@/components/navigation-transition-confirmation';
-import languages from '@/data/languages.json';
 import QueryKey from '@/enums/query-key';
 import { NullableUser } from '@/types';
 import { createSimpleStringValidator } from '@/utils/validation';
@@ -84,7 +83,8 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
           label={intl.$t({ id: 'Form.OrganizationLabel' })}
         />
         <AppTextFieldForm control={form.control} field="phone" label={intl.$t({ id: 'Form.PhoneLabel' })} />
-        <AppTextFieldForm
+        {/* TODO: Add when language change is ready */}
+        {/* <AppTextFieldForm
           select
           control={form.control}
           field="language"
@@ -96,7 +96,7 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
               {label}
             </option>
           ))}
-        </AppTextFieldForm>
+        </AppTextFieldForm> */}
       </div>
       <FormDivider />
       <div className="flex justify-end">

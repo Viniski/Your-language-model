@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton } from '@mui/material';
 import { twMerge } from 'tailwind-merge';
 import openai from '@/api/openapi';
-import { AppTextField } from '@/components';
+import { AppButton, AppTextField } from '@/components';
+import useChatStore from '@/store/use-chat-store';
+import { MessageType } from '@/types';
+import DashboardNewChatDialog from './dashboard-new-chat-dialog';
 
-type MessageType = { role: 'user' | 'assistant'; content: string };
-
-const DashboardChatMessage = ({ role, content }: { role: 'user' | 'assistant'; content: string }) => (
+const DashboardChatMessage = ({ role, content }: MessageType) => (
   <div className={twMerge('rounded-lg p-2', role === 'user' ? 'col-start-1 col-end-8' : 'col-start-6 col-end-13')}>
     <div className={twMerge('flex items-center', role === 'user' ? 'flex-row' : 'flex-row-reverse')}>
       {role === 'user' && (
@@ -26,29 +27,17 @@ const DashboardChatMessage = ({ role, content }: { role: 'user' | 'assistant'; c
 
 const DashboardChat = () => {
   const intl = useIntl();
-  const [value, setValue] = useState('');
-  const [messages, setMessages] = useState<MessageType[]>([
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-    { role: 'user', content: 'message' },
-    { role: 'assistant', content: 'message assistant' },
-  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const { chatMessages, setChatMessages, resetChatMessages } = useChatStore();
+  const [isNewChatDialogOpen, toggleIsNewChatDialogOpen] = useReducer((value) => !value, false);
   const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef<HTMLDivElement>(null);
 
   const responseGenerate = async (message: string) => {
     setIsTyping(true);
-    const newMessages: MessageType[] = [...messages, { role: 'user', content: message }];
+    const newMessages: MessageType[] = [...chatMessages, { role: 'user', content: message }];
 
-    setMessages(newMessages);
+    setChatMessages(newMessages);
 
     await openai.chat.completions
       .create({
@@ -56,16 +45,16 @@ const DashboardChat = () => {
         store: true,
         messages: newMessages,
       })
-      .then((result) => setMessages([...newMessages, result.choices[0].message as MessageType]));
+      .then((result) => setChatMessages([...newMessages, result.choices[0].message as MessageType]));
     setIsTyping(false);
   };
 
   const handleSendMessage = () => {
-    if (value.trim() === '') {
+    if (inputMessage.trim() === '') {
       return;
     }
-    responseGenerate(value);
-    setValue('');
+    responseGenerate(inputMessage);
+    setInputMessage('');
   };
 
   const scrollToBottom = () => {
@@ -75,44 +64,64 @@ const DashboardChat = () => {
     }
   };
 
+  const handleNewChatDialog = () => {
+    resetChatMessages();
+    toggleIsNewChatDialogOpen();
+  };
+
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [chatMessages]);
 
   return (
-    <div className="flex w-full flex-col gap-2">
-      <div
-        ref={messagesRef}
-        className="grid max-h-[500px] min-h-[200px] grid-cols-12 content-start gap-y-2 overflow-auto px-2"
-      >
-        {messages.length ? (
-          messages.map((message, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <DashboardChatMessage key={index} content={message.content} role={message.role} />
-          ))
-        ) : (
-          <span className="col-span-12 py-20 text-center text-gray-300">
-            <FormattedMessage id="Profile.ChatNoMessages" />
-          </span>
-        )}
-      </div>
-      <div className="flex gap-2">
-        <AppTextField
-          className="w-full"
-          placeholder={intl.$t({ id: 'Profile.ChatInputPlaceholder' })}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <IconButton
-          aria-label="send"
-          className="text-001 hover:text-003"
-          disabled={isTyping}
-          onClick={handleSendMessage}
+    <>
+      <DashboardNewChatDialog
+        open={isNewChatDialogOpen}
+        onClose={toggleIsNewChatDialogOpen}
+        onConfirm={handleNewChatDialog}
+      />
+      <div className="flex w-full flex-col gap-2">
+        <div
+          ref={messagesRef}
+          className="grid max-h-[500px] min-h-[200px] grid-cols-12 content-start gap-y-2 overflow-auto px-2"
         >
-          <FontAwesomeIcon className="w-[45px]" icon={faPaperPlane} />
-        </IconButton>
+          {chatMessages.length ? (
+            chatMessages.map((chatMessage, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <DashboardChatMessage key={index} content={chatMessage.content} role={chatMessage.role} />
+            ))
+          ) : (
+            <span className="col-span-12 py-20 text-center text-gray-300">
+              <FormattedMessage id="Dashboard.ChatNoMessages" />
+            </span>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <AppTextField
+            className="w-full"
+            placeholder={intl.$t({ id: 'Dashboard.ChatInputPlaceholder' })}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+          />
+          <IconButton
+            aria-label="send"
+            className="text-001 hover:text-003"
+            disabled={isTyping}
+            onClick={handleSendMessage}
+          >
+            <FontAwesomeIcon className="w-[45px]" icon={faPaperPlane} />
+          </IconButton>
+        </div>
+        <AppButton
+          disableRipple
+          className="self-center bg-transparent text-error"
+          variant="text"
+          onClick={toggleIsNewChatDialogOpen}
+        >
+          <FormattedMessage id="Dashboard.ChatNewButton" />
+        </AppButton>
       </div>
-    </div>
+    </>
   );
 };
 

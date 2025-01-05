@@ -55,39 +55,41 @@ const ProfileEmail = () => {
   useNavigationTransitionConfirmation(isEditing);
 
   return (
-    <FormAccordion title={intl.$t({ id: 'Profile.EmailTitle' })} titleBarClassName="bg-007">
+    <>
       <ProfileEmailVerifyDialog open={isVerifyEmailDialogOpen} onClose={toggleIsVerifyEmailDialogOpen} />
-      <FormDivider />
-      <div className="grid items-center gap-6 md:grid-cols-2">
-        <AppTextFieldForm
-          control={form.control}
-          field="email"
-          label={intl.$t({ id: 'Form.NewEmailLabel' })}
-          type="email"
-        />
-        <div className="flex flex-wrap justify-end gap-4">
+      <FormAccordion title={intl.$t({ id: 'Profile.EmailTitle' })} titleBarClassName="bg-007">
+        <FormDivider />
+        <div className="grid items-center gap-6 md:grid-cols-2">
+          <AppTextFieldForm
+            control={form.control}
+            field="email"
+            label={intl.$t({ id: 'Form.NewEmailLabel' })}
+            type="email"
+          />
+          <div className="flex flex-wrap justify-end gap-4">
+            <AppButton
+              color="003"
+              startIcon={<FontAwesomeIcon icon={faEnvelope} />}
+              type="button"
+              onClick={toggleIsVerifyEmailDialogOpen}
+            >
+              <FormattedMessage id="Profile.VerifyEmailAction" />
+            </AppButton>
+          </div>
+        </div>
+        <FormDivider />
+        <div className="flex justify-end">
           <AppButton
             color="003"
-            startIcon={<FontAwesomeIcon icon={faEnvelope} />}
-            type="button"
-            onClick={toggleIsVerifyEmailDialogOpen}
+            disabled={!isEditing}
+            loading={useUpdateProfileEmail.isLoading}
+            onClick={form.handleSubmit((values: FormData) => useUpdateProfileEmail.mutate(values))}
           >
-            <FormattedMessage id="Profile.VerifyEmailAction" />
+            <FormattedMessage id="Common.SaveChanges" />
           </AppButton>
         </div>
-      </div>
-      <FormDivider />
-      <div className="flex justify-end">
-        <AppButton
-          color="003"
-          disabled={!isEditing}
-          loading={useUpdateProfileEmail.isLoading}
-          onClick={form.handleSubmit((values: FormData) => useUpdateProfileEmail.mutate(values))}
-        >
-          <FormattedMessage id="Common.SaveChanges" />
-        </AppButton>
-      </div>
-    </FormAccordion>
+      </FormAccordion>
+    </>
   );
 };
 
