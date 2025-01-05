@@ -1,5 +1,5 @@
 const AppLogo = ({ className }: { className?: string }) => (
-  <img alt="" className={className} height={39} src="/images/logo.jpg" width={120} />
+  <img alt="" className={className} height={40} src="/images/logo.png" width={40} />
 );
 
 export default AppLogo;

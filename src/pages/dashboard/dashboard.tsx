@@ -1,19 +1,29 @@
+import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PageTitle from '@/components/page-title';
-import DashboardPage from './components/dashboard-page';
+import DashboardChat from './components/dashboard-chat';
+import DashboardList from './components/dashboard-list';
+import DashboardPrompt from './components/dashboard-prompt';
 
-const Dashboard = () => (
-  <div className="flex grow flex-col">
-    <div className="mb-8 flex flex-col gap-8 md:gap-0">
-      <PageTitle>
-        <FormattedMessage id="Dashboard.Title" />
-      </PageTitle>
-      <p className="text-gray-400">
-        <FormattedMessage id="Dashboard.Description" />
-      </p>
+const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState<'default' | 'prompt'>('default');
+
+  return (
+    <div className="flex grow flex-col">
+      <div className="mb-8 flex flex-col gap-8 md:gap-0">
+        <PageTitle>
+          <FormattedMessage id="Dashboard.Title" />
+        </PageTitle>
+        <p className="text-gray-400">
+          <FormattedMessage id="Dashboard.Description" />
+        </p>
+      </div>
+      <DashboardList.Container>
+        <DashboardList.Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {activeTab === 'default' ? <DashboardChat /> : <DashboardPrompt />}
+      </DashboardList.Container>
     </div>
-    <DashboardPage />
-  </div>
-);
+  );
+};
 
 export default Dashboard;

@@ -16,9 +16,9 @@ const AppRoutes = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     <Routes>
       {isLoggedIn && !isResetRoute ? (
         <Route element={<Main />}>
-          <Route element={<Dashboard />} path="/features" />
+          <Route element={<Dashboard />} path="/dashboard" />
           <Route element={<Profile />} path="/profile" />
-          <Route element={<Navigate replace to="/features" />} path="*" />
+          <Route element={<Navigate replace to="/dashboard" />} path="*" />
         </Route>
       ) : (
         <Route element={<Public />}>

@@ -58,6 +58,8 @@
   "Offline.LicenseNoFoundErrorToastMessage": "Nie ma w systemie licencji o podanym kluczu. Spróbuj ponownie lub skontaktuj się z nami.",
   "Offline.SaveToFile": "Zapisz do pliku",
   "Offline.Title": "Klucz licencyjny offline",
+  "Profile.ChatInputPlaceholder": "Wpisz i wyślij wiadomość...",
+  "Profile.ChatNoMessages": "Rozpocznij rozmowę z Twoim modelem językowym.",
   "Profile.EmailTitle": "Zmień e-mail",
   "Profile.PasswordTitle": "Zmień hasło",
   "Profile.SettingsTitle": "Ustawienia profilu",

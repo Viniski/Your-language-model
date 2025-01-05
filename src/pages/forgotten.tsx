@@ -33,13 +33,7 @@ const Forgotten = () => {
     >
       {useRemindPassword.isSuccess ? (
         <>
-          <img
-            alt={intl.$t({ id: 'Forgotten.EmailSentTitle' })}
-            className="mb-6 max-w-full"
-            height={148}
-            src="/images/email-sent.svg"
-            width={262}
-          />
+          <img alt="" className="mb-6 max-w-full" height={148} src="/images/email-sent.svg" width={262} />
           <PublicContainer.Title className="mb-2.5">
             <FormattedMessage id="Forgotten.EmailSentTitle" />
           </PublicContainer.Title>
