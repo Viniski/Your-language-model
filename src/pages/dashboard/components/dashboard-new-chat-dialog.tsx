@@ -12,16 +12,16 @@ const DashboardNewChatDialog = ({
 }) => (
   <AppDialog.Container open={open}>
     <AppDialog.Title onClose={onClose}>
-      <FormattedMessage id="Dashboard.ChatNewDialogTitle" />
+      <FormattedMessage id="Dashboard.ChatNew.Dialog.Title" />
     </AppDialog.Title>
     <AppDialog.Description className="mb-8 flex flex-col gap-2">
       <p>
-        <FormattedMessage id="Dashboard.ChatNewDialogDescription" />
+        <FormattedMessage id="Dashboard.ChatNew.Dialog.Description" />
       </p>
     </AppDialog.Description>
     <AppDialog.Actions>
       <AppButton color="003" variant="outlined" onClick={onConfirm}>
-        <FormattedMessage id="Dashboard.ChatNewDialogConfirm" />
+        <FormattedMessage id="Dashboard.ChatNew.Dialog.Confirm" />
       </AppButton>
     </AppDialog.Actions>
   </AppDialog.Container>

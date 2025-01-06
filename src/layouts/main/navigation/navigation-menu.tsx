@@ -13,8 +13,8 @@ const NavigationMenu = ({ user, toggleNavigation }: { user: NullableUser; toggle
   const logout = useLogout();
 
   const links = [
-    { to: '/features', icon: faMap, text: intl.$t({ id: 'Nav.WeAreWorkingOn' }) },
-    { to: '/profile', icon: faUser, text: intl.$t({ id: 'Nav.YourData' }) },
+    { to: '/features', icon: faMap, text: intl.$t({ id: 'Nav.Dashboard' }) },
+    { to: '/profile', icon: faUser, text: intl.$t({ id: 'Nav.Profile' }) },
   ];
 
   const toggleNavigationOnMobile = () => {

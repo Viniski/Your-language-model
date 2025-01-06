@@ -4,12 +4,15 @@ import { AppButton, AppDialog } from '@/components';
 const ProfileEmailVerifyDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
   <AppDialog.Container open={open}>
     <AppDialog.Title onClose={onClose}>
-      <FormattedMessage id="Profile.VerifyEmailDialogTitle" />
+      <FormattedMessage id="Profile.VerifyEmail.Dialog.Title" />
     </AppDialog.Title>
     <AppDialog.Description className="mb-8 flex flex-col gap-2">
-      <p>
-        <FormattedMessage id="Profile.VerifyEmailDialogDescription1" />
-      </p>
+      <span>
+        <FormattedMessage id="Profile.VerifyEmail.Dialog.Description.1" />
+      </span>
+      <span>
+        <FormattedMessage id="Profile.VerifyEmail.Dialog.Description.2" />
+      </span>
     </AppDialog.Description>
     <AppDialog.Actions>
       <AppButton color="003" variant="outlined" onClick={onClose}>

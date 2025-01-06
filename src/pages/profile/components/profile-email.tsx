@@ -38,13 +38,13 @@ const ProfileEmail = () => {
       }
     },
     onSuccess: (_, variables) => {
-      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccessTitle' }), {
+      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccess.Title' }), {
         variant: 'success',
       });
       form.reset(variables);
     },
     onError: () => {
-      enqueueSnackbar(intl.$t({ id: 'Error.CommonError' }), {
+      enqueueSnackbar(intl.$t({ id: 'Error.UnexpectedOccurred' }), {
         variant: 'error',
         persist: true,
       });
@@ -57,13 +57,13 @@ const ProfileEmail = () => {
   return (
     <>
       <ProfileEmailVerifyDialog open={isVerifyEmailDialogOpen} onClose={toggleIsVerifyEmailDialogOpen} />
-      <FormAccordion title={intl.$t({ id: 'Profile.EmailTitle' })} titleBarClassName="bg-007">
+      <FormAccordion title={intl.$t({ id: 'Profile.Email.Title' })} titleBarClassName="bg-007">
         <FormDivider />
         <div className="grid items-center gap-6 md:grid-cols-2">
           <AppTextFieldForm
             control={form.control}
             field="email"
-            label={intl.$t({ id: 'Form.NewEmailLabel' })}
+            label={intl.$t({ id: 'Form.NewEmail' })}
             type="email"
           />
           <div className="flex flex-wrap justify-end gap-4">
@@ -73,7 +73,7 @@ const ProfileEmail = () => {
               type="button"
               onClick={toggleIsVerifyEmailDialogOpen}
             >
-              <FormattedMessage id="Profile.VerifyEmailAction" />
+              <FormattedMessage id="Profile.VerifyEmail.Action" />
             </AppButton>
           </div>
         </div>

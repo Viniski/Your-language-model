@@ -56,11 +56,11 @@ const Reset = () => {
           />
           <div className="mb-6 flex flex-col items-center gap-2.5">
             <PublicContainer.Title className="whitespace-pre-line text-center">
-              <FormattedMessage id={useResetPassword.isError ? 'Reset.TitleError' : 'Reset.TitleSuccess'} />
+              <FormattedMessage id={useResetPassword.isError ? 'Reset.Error.Title' : 'Reset.Success.Title'} />
             </PublicContainer.Title>
             {useResetPassword.isError && (
               <p className="text-center text-gray-300">
-                <FormattedMessage id="Reset.DescriptionError" />
+                <FormattedMessage id="Reset.Error.Description" />
               </p>
             )}
           </div>
@@ -78,7 +78,7 @@ const Reset = () => {
             control={form.control}
             field="password"
             inputProps={{ autoComplete: 'new-password' }}
-            label={intl.$t({ id: 'Form.PasswordLabel' })}
+            label={intl.$t({ id: 'Form.NewPassword' })}
           />
           <AppButton
             className="mb-8 rounded-xl !py-4 !text-base !font-normal"

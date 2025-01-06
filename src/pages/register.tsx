@@ -42,12 +42,12 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
   const agreements = [
     {
       name: 'privacyPolicy',
-      label: intl.$t({ id: 'Register.AgreementPrivacyPolicyLabel' }),
+      label: intl.$t({ id: 'Register.AgreementPrivacyPolicy' }),
       link: intl.$t({ id: 'Common.PrivacyPolicyLink' }),
     },
     {
       name: 'terms',
-      label: intl.$t({ id: 'Register.AgreementTermsLabel' }),
+      label: intl.$t({ id: 'Register.AgreementTerms' }),
       link: intl.$t({ id: 'Common.TermsLink' }),
     },
   ] as const;
@@ -83,11 +83,11 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
         />
         <div className="mb-6 flex flex-col items-center gap-2.5">
           <PublicContainer.Title className="whitespace-pre-line text-center">
-            <FormattedMessage id={useRegisterUser.isError ? 'Register.TitleError' : 'Register.TitleSuccess'} />
+            <FormattedMessage id={useRegisterUser.isError ? 'Register.Error.Title' : 'Register.Success.Title'} />
           </PublicContainer.Title>
           <p className="text-center text-gray-300">
             <FormattedMessage
-              id={useRegisterUser.isError ? 'Register.DescriptionError' : 'Register.DescriptionSuccess'}
+              id={useRegisterUser.isError ? 'Register.Error.Description' : 'Register.Success.Description'}
             />
           </p>
         </div>
@@ -114,15 +114,15 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
                 autoFocus
                 control={form.control}
                 field="firstName"
-                label={intl.$t({ id: 'Form.FirstNameLabel' })}
+                label={intl.$t({ id: 'Form.FirstName' })}
               />
-              <AppTextFieldForm control={form.control} field="lastName" label={intl.$t({ id: 'Form.LastNameLabel' })} />
+              <AppTextFieldForm control={form.control} field="lastName" label={intl.$t({ id: 'Form.LastName' })} />
               <AppTextFieldForm
                 control={form.control}
                 field="organization"
-                label={intl.$t({ id: 'Form.OrganizationLabel' })}
+                label={intl.$t({ id: 'Form.Organization' })}
               />
-              <AppTextFieldForm control={form.control} field="phone" label={intl.$t({ id: 'Form.PhoneLabel' })} />
+              <AppTextFieldForm control={form.control} field="phone" label={intl.$t({ id: 'Form.Phone' })} />
             </div>
           </div>
           <div className="flex flex-col gap-4">
@@ -134,14 +134,14 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
                 control={form.control}
                 field="email"
                 inputProps={{ autoComplete: 'email' }}
-                label={intl.$t({ id: 'Form.EmailLabel' })}
+                label={intl.$t({ id: 'Form.Email' })}
                 type="email"
               />
               <AppTextFieldFormPassword
                 control={form.control}
                 field="password"
                 inputProps={{ autoComplete: 'new-password' }}
-                label={intl.$t({ id: 'Form.PasswordLabel' })}
+                label={intl.$t({ id: 'Form.Password' })}
               />
             </div>
           </div>
@@ -165,7 +165,7 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
                       label={
                         <p className="text-sm text-gray-500">
                           <FormattedMessage
-                            id="Register.AgreementLabel"
+                            id="Register.Agreement"
                             values={{
                               link: (
                                 <a className="text-primary-500" href={link} rel="noreferrer" target="_blank">

@@ -20,8 +20,8 @@ type TabsProps = {
 const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
   const intl = useIntl();
   const tabs = [
-    { key: 'default', label: intl.$t({ id: 'Dashboard.TabDefault' }) },
-    { key: 'prompt', label: intl.$t({ id: 'Dashboard.TabPrompt' }) },
+    { key: 'default', label: intl.$t({ id: 'Dashboard.Tab.Default' }) },
+    { key: 'prompt', label: intl.$t({ id: 'Dashboard.Tab.Prompt' }) },
   ] as const;
 
   return (

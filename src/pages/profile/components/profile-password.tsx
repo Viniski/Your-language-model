@@ -35,13 +35,13 @@ const FormPassword = () => {
       }
     },
     onSuccess: (_, variables) => {
-      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccessTitle' }), {
+      enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccess.Title' }), {
         variant: 'success',
       });
       form.reset(variables);
     },
     onError: () => {
-      enqueueSnackbar(intl.$t({ id: 'Error.CommonError' }), {
+      enqueueSnackbar(intl.$t({ id: 'Error.UnexpectedOccurred' }), {
         variant: 'error',
         persist: true,
       });
@@ -49,13 +49,13 @@ const FormPassword = () => {
   });
 
   return (
-    <FormAccordion title={intl.$t({ id: 'Profile.PasswordTitle' })} titleBarClassName="bg-004">
+    <FormAccordion title={intl.$t({ id: 'Profile.Password.Title' })} titleBarClassName="bg-004">
       <FormDivider />
       <div className="grid gap-6 md:grid-cols-2">
         <AppTextFieldFormPassword
           control={form.control}
           field="newPassword"
-          label={intl.$t({ id: 'Form.NewPasswordLabel' })}
+          label={intl.$t({ id: 'Form.NewPassword' })}
         />
       </div>
       <FormDivider />

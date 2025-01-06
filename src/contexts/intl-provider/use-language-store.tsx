@@ -1,24 +1,19 @@
 import { IntlConfig } from 'react-intl';
 import { create } from 'zustand';
 import languages from '@/data/languages.json';
+import { Language } from '@/types';
 
 interface State {
   language: IntlConfig['locale'];
-  setLanguage: (language: string) => void;
-  resetLanguage: () => void;
+  setLanguage: (language: Language) => void;
 }
 
-const DEFAULT_LANGUAGE = 'en';
-
-const getLanguageWithFallback = (language: string) =>
-  Object.keys(languages).includes(language) ? (language as State['language']) : DEFAULT_LANGUAGE;
-
-const browserLanguageWithFallback = getLanguageWithFallback(navigator.language.split('-')[0]);
+const getLanguageWithFallback = (language: Language) =>
+  Object.keys(languages).includes(language) ? (language as State['language']) : 'pl';
 
 const useLanguageStore = create<State>()((set) => ({
-  language: browserLanguageWithFallback,
+  language: getLanguageWithFallback(navigator.language.split('-')[0] as Language),
   setLanguage: (language) => set({ language: getLanguageWithFallback(language) }),
-  resetLanguage: () => set({ language: browserLanguageWithFallback }),
 }));
 
 export default useLanguageStore;

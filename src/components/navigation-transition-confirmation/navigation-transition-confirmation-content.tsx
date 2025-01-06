@@ -22,17 +22,17 @@ const NavigationTransitionConfirmationContent = () => {
   return (
     <AppDialog.Container className="text-center" open={!!handleConfirm}>
       <AppDialog.Title className="mr-0">
-        <FormattedMessage id="Common.PageLeaveConfirmationTitle" />
+        <FormattedMessage id="Common.PageLeaveConfirmation.Title" />
       </AppDialog.Title>
       <AppDialog.Description>
-        <FormattedMessage id="Common.PageLeaveConfirmationDescription" />
+        <FormattedMessage id="Common.PageLeaveConfirmation.Description" />
       </AppDialog.Description>
       <AppDialog.Actions className="mt-5 justify-center">
         <AppButton color="003" variant="outlined" onClick={() => handleConfirm?.()}>
-          <FormattedMessage id="Common.PageLeaveConfirmationConfirm" />
+          <FormattedMessage id="Common.PageLeaveConfirmation.Confirm" />
         </AppButton>
         <AppButton color="003" onClick={() => setHandleConfirm(null)}>
-          <FormattedMessage id="Common.PageLeaveConfirmationCancel" />
+          <FormattedMessage id="Common.PageLeaveConfirmation.Cancel" />
         </AppButton>
       </AppDialog.Actions>
     </AppDialog.Container>

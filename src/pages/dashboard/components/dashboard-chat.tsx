@@ -114,11 +114,11 @@ const DashboardChat = () => {
         </div>
         <AppButton
           disableRipple
-          className="self-center bg-transparent text-error"
+          className="self-center bg-transparent text-003"
           variant="text"
           onClick={toggleIsNewChatDialogOpen}
         >
-          <FormattedMessage id="Dashboard.ChatNewButton" />
+          <FormattedMessage id="Dashboard.ChatNew.Button" />
         </AppButton>
       </div>
     </>

@@ -38,14 +38,14 @@ const Login = () => {
           control={form.control}
           field="email"
           inputProps={{ autoComplete: 'email' }}
-          label={intl.$t({ id: 'Form.EmailLabel' })}
+          label={intl.$t({ id: 'Form.Email' })}
           type="email"
         />
         <AppTextFieldFormPassword
           control={form.control}
           field="password"
           inputProps={{ autoComplete: 'current-password' }}
-          label={intl.$t({ id: 'Form.PasswordLabel' })}
+          label={intl.$t({ id: 'Form.Password' })}
         />
       </div>
       <Link className="self-end font-semibold text-primary-500 no-underline" to="/forgotten">

@@ -35,10 +35,10 @@ const Forgotten = () => {
         <>
           <img alt="" className="mb-6 max-w-full" height={148} src="/images/email-sent.svg" width={262} />
           <PublicContainer.Title className="mb-2.5">
-            <FormattedMessage id="Forgotten.EmailSentTitle" />
+            <FormattedMessage id="Forgotten.EmailSent.Title" />
           </PublicContainer.Title>
           <p className="mb-6 flex flex-col items-center text-center text-gray-600">
-            <FormattedMessage id="Forgotten.EmailSentDescription" />
+            <FormattedMessage id="Forgotten.EmailSent.Description" />
             <span className="font-bold text-primary-900">{form.getValues('email')}</span>
           </p>
           <Link className="self-center font-semibold text-primary-500 no-underline" to="/">
@@ -58,7 +58,7 @@ const Forgotten = () => {
             control={form.control}
             field="email"
             inputProps={{ autoComplete: 'email' }}
-            label={intl.$t({ id: 'Form.EmailLabel' })}
+            label={intl.$t({ id: 'Form.Email' })}
           />
           <AppButton
             className="rounded-xl !py-4 !text-base !font-normal"
