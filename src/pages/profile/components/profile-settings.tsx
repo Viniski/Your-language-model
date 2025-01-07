@@ -65,7 +65,7 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
     onSuccess: (_, variables) => {
       setLanguage(variables.language);
       enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccess.Title' }, { language: variables.language }));
-      queryClient.invalidateQueries([QueryKey.USER]);
+      queryClient.invalidateQueries([QueryKey.CURRENT_USER]);
       form.reset(variables);
     },
     onError: () => {

@@ -37,11 +37,11 @@ const ProfileEmail = () => {
         throw error;
       }
     },
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       enqueueSnackbar(intl.$t({ id: 'Profile.UpdateToastSuccess.Title' }), {
         variant: 'success',
       });
-      form.reset(variables);
+      form.reset();
     },
     onError: () => {
       enqueueSnackbar(intl.$t({ id: 'Error.UnexpectedOccurred' }), {

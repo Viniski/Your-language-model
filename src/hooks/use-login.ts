@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import QueryKey from '@/enums/query-key';
 import supabase from '@/api/supabase-client';
+import QueryKey from '@/enums/query-key';
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -14,12 +14,14 @@ const useLogin = () => {
         email: value.email,
         password: value.password,
       });
+
       if (error) {
         throw error.code;
       }
+
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       const redirect = searchParams.get('redirect');
 
       if (redirect) {

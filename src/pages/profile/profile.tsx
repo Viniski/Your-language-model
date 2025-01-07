@@ -1,31 +1,15 @@
 import { FormattedMessage } from 'react-intl';
-import { useQuery } from '@tanstack/react-query';
-import supabase from '@/api/supabase-client';
 import { AppLoader } from '@/components';
 import PageTitle from '@/components/page-title';
-import QueryKey from '@/enums/query-key';
+import { useCurrentUserQuery } from '@/hooks';
 import ProfileEmail from './components/profile-email';
 import ProfilePassword from './components/profile-password';
 import ProfileSettings from './components/profile-settings';
 
 const Divider = () => <div className="mx-8 hidden border-b border-[--border-secondary] md:flex" />;
 
-const fetchProfile = async () => {
-  const user = await supabase.auth.getUser();
-
-  return supabase
-    .from('profiles')
-    .select(`first_name, last_name, organization, phone, language`)
-    .eq('id', user.data.user?.id)
-    .single()
-    .then(({ data }) => data);
-};
-
 const Profile = () => {
-  const currentUserQuery = useQuery({
-    queryKey: [QueryKey.USER],
-    queryFn: fetchProfile,
-  });
+  const currentUserQuery = useCurrentUserQuery();
 
   if (currentUserQuery.isLoading || !currentUserQuery.data) {
     return <AppLoader />;

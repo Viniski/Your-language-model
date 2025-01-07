@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import QueryKey from '@/enums/query-key';
 import supabase from '@/api/supabase-client';
+import QueryKey from '@/enums/query-key';
 
 const fetchProfile = async () => {
   const user = await supabase.auth.getUser();
 
-  return await supabase
+  const { data } = await supabase
     .from('profiles')
     .select(`first_name, last_name, organization, phone, language`)
     .eq('id', user.data.user?.id)
-    .single()
-    .then(({ data }) => data);
+    .single();
+
+  return data;
 };
 
 const useCurrentUserQuery = () =>

@@ -14,7 +14,7 @@
   "Dashboard.ChatNew.Button": "Utwórz nowy chat",
   "Dashboard.ChatNew.Dialog.Confirm": "Zatwierdź",
   "Dashboard.ChatNew.Dialog.Description": "Nowy czat zostanie utworzony w miejsce obecnego. Obecny chat zostanie usunięty i nie będziesz miał już do niego dostępu.",
-  "Dashboard.ChatNew.Dialog.Title": "Tworząc nowy chat usuwasz obecny!",
+  "Dashboard.ChatNew.Dialog.Title": "Tworząc nowy chat, usuwasz obecny!",
   "Dashboard.ChatNoMessages": "Rozpocznij rozmowę z Twoim modelem językowym.",
   "Dashboard.Description": "Zacznij już dziś korzystać z modeli językowych!",
   "Dashboard.Prompt.VideoId": "Qn_-oK2ENK0",

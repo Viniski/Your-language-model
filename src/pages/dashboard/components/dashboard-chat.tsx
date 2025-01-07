@@ -18,7 +18,7 @@ const DashboardChatMessage = ({ role, content }: MessageType) => (
           <img alt="" height={40} src="/images/logo.png" width={40} />
         </div>
       )}
-      <div className={twMerge('rounded-xl p-3 text-sm shadow', role === 'user' ? 'ml-3 bg-white' : 'mr-3 bg-blue-500')}>
+      <div className={twMerge('rounded-xl p-3 text-sm shadow', role === 'user' ? 'ml-3 bg-white' : 'mr-3 bg-006')}>
         <span className={twMerge('whitespace-pre-wrap', role === 'user' ? 'text-black' : 'text-white')}>{content}</span>
       </div>
     </div>
@@ -69,6 +69,13 @@ const DashboardChat = () => {
     toggleIsNewChatDialogOpen();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
@@ -101,7 +108,8 @@ const DashboardChat = () => {
             className="w-full"
             placeholder={intl.$t({ id: 'Dashboard.ChatInputPlaceholder' })}
             value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
+            onChange={(event) => setInputMessage(event.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <IconButton
             aria-label="send"
