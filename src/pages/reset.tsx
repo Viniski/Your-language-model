@@ -16,7 +16,7 @@ const Reset = () => {
   const logout = useLogout();
   const { token = '' } = useParams();
 
-  const useResetPassword = useMutation({
+  const resetPasswordMutation = useMutation({
     mutationFn: async (password: FormData['password']) => {
       if (token !== 'super_secret_token') {
         throw new Error('Invalid token');
@@ -38,12 +38,12 @@ const Reset = () => {
     resolver: zodResolver(formSchema),
     defaultValues: { password: '' },
   });
-  const isMutationSent = useResetPassword.isSuccess || useResetPassword.isError;
+  const isMutationSent = resetPasswordMutation.isSuccess || resetPasswordMutation.isError;
 
   return (
     <PublicContainer
       className={twJoin(isMutationSent && 'items-center')}
-      onSubmit={form.handleSubmit(({ password }) => useResetPassword.mutate(password))}
+      onSubmit={form.handleSubmit(({ password }) => resetPasswordMutation.mutate(password))}
     >
       {isMutationSent ? (
         <>
@@ -51,14 +51,14 @@ const Reset = () => {
             alt=""
             className="mb-8 max-w-full"
             height={148}
-            src={useResetPassword.isError ? '/images/action-error.svg' : '/images/action-success.svg'}
+            src={resetPasswordMutation.isError ? '/images/action-error.svg' : '/images/action-success.svg'}
             width={262}
           />
           <div className="mb-6 flex flex-col items-center gap-2.5">
             <PublicContainer.Title className="whitespace-pre-line text-center">
-              <FormattedMessage id={useResetPassword.isError ? 'Reset.Error.Title' : 'Reset.Success.Title'} />
+              <FormattedMessage id={resetPasswordMutation.isError ? 'Reset.Error.Title' : 'Reset.Success.Title'} />
             </PublicContainer.Title>
-            {useResetPassword.isError && (
+            {resetPasswordMutation.isError && (
               <p className="text-center text-gray-300">
                 <FormattedMessage id="Reset.Error.Description" />
               </p>
@@ -82,7 +82,7 @@ const Reset = () => {
           />
           <AppButton
             className="mb-8 rounded-xl !py-4 !text-base !font-normal"
-            loading={useResetPassword.isLoading}
+            loading={resetPasswordMutation.isLoading}
             type="submit"
           >
             <FormattedMessage id="Reset.ChangePassword" />
@@ -91,9 +91,9 @@ const Reset = () => {
       )}
       <Link
         className="self-center text-center font-semibold text-primary-500 no-underline"
-        to={useResetPassword.isError ? '/forgotten' : '/login'}
+        to={resetPasswordMutation.isError ? '/forgotten' : '/login'}
       >
-        <FormattedMessage id={useResetPassword.isError ? 'Reset.GoToReset' : 'Reset.GoToLoginPage'} />
+        <FormattedMessage id={resetPasswordMutation.isError ? 'Reset.GoToReset' : 'Reset.GoToLoginPage'} />
       </Link>
     </PublicContainer>
   );

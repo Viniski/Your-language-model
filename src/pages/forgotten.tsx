@@ -13,7 +13,7 @@ import { createEmailValidator } from '@/utils/validation';
 const Forgotten = () => {
   const intl = useIntl();
   const [searchParams] = useSearchParams();
-  const useRemindPassword = useMutation({
+  const remindPasswordMutation = useMutation({
     mutationFn: async (email: string) =>
       supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'http://localhost:3000/reset/super_secret_token',
@@ -28,10 +28,10 @@ const Forgotten = () => {
 
   return (
     <PublicContainer
-      className={twJoin(useRemindPassword.isSuccess && 'items-center')}
-      onSubmit={form.handleSubmit(({ email }) => useRemindPassword.mutate(email))}
+      className={twJoin(remindPasswordMutation.isSuccess && 'items-center')}
+      onSubmit={form.handleSubmit(({ email }) => remindPasswordMutation.mutate(email))}
     >
-      {useRemindPassword.isSuccess ? (
+      {remindPasswordMutation.isSuccess ? (
         <>
           <img alt="" className="mb-6 max-w-full" height={148} src="/images/email-sent.svg" width={262} />
           <PublicContainer.Title className="mb-2.5">
@@ -62,7 +62,7 @@ const Forgotten = () => {
           />
           <AppButton
             className="rounded-xl !py-4 !text-base !font-normal"
-            loading={useRemindPassword.isLoading}
+            loading={remindPasswordMutation.isLoading}
             type="submit"
           >
             <FormattedMessage id="Forgotten.ResetPassword" />

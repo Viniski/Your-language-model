@@ -8,10 +8,9 @@ import { ChildrenProps } from '@/types';
 
 interface Props extends ChildrenProps {
   title: string;
-  titleBarClassName: string;
 }
 
-const FormAccordion = ({ title, titleBarClassName, children }: Props) => {
+const FormAccordion = ({ title, children }: Props) => {
   const isMobile = useIsMobile();
   const [prevIsMobile, setPrevIsMobile] = useState(isMobile);
   const [isExpanded, setIsExpanded] = useState(!isMobile);
@@ -38,7 +37,7 @@ const FormAccordion = ({ title, titleBarClassName, children }: Props) => {
           }}
         >
           <div className="flex gap-2">
-            <div className={twMerge('w-1', titleBarClassName)} />
+            <div className={twMerge('w-1 bg-004')} />
             <h2 className="text-lg font-bold">{title}</h2>
           </div>
         </AccordionSummary>

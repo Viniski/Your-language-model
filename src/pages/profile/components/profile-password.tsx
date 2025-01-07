@@ -24,7 +24,7 @@ const FormPassword = () => {
   const isEditing = form.formState.isDirty;
   useNavigationTransitionConfirmation(isEditing);
 
-  const useUpdateProfilePassword = useMutation({
+  const updateProfilePasswordMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const { error } = await supabase.auth.updateUser({
         password: data.newPassword,
@@ -49,7 +49,7 @@ const FormPassword = () => {
   });
 
   return (
-    <FormAccordion title={intl.$t({ id: 'Profile.Password.Title' })} titleBarClassName="bg-004">
+    <FormAccordion title={intl.$t({ id: 'Profile.Password.Title' })}>
       <FormDivider />
       <div className="grid gap-6 md:grid-cols-2">
         <AppTextFieldFormPassword
@@ -63,8 +63,8 @@ const FormPassword = () => {
         <AppButton
           color="003"
           disabled={!isEditing}
-          loading={useUpdateProfilePassword.isLoading}
-          onClick={form.handleSubmit((values) => useUpdateProfilePassword.mutate(values))}
+          loading={updateProfilePasswordMutation.isLoading}
+          onClick={form.handleSubmit((values) => updateProfilePasswordMutation.mutate(values))}
         >
           <FormattedMessage id="Common.SaveChanges" />
         </AppButton>

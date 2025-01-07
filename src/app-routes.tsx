@@ -4,6 +4,7 @@ import Public from '@/layouts/public';
 import Dashboard from '@/pages/dashboard';
 import Forgotten from '@/pages/forgotten';
 import Login from '@/pages/login';
+import Models from '@/pages/models';
 import Profile from '@/pages/profile';
 import Register from '@/pages/register';
 import Reset from '@/pages/reset';
@@ -17,6 +18,7 @@ const AppRoutes = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
       {isLoggedIn && !isResetRoute ? (
         <Route element={<Main />}>
           <Route element={<Dashboard />} path="/dashboard" />
+          <Route element={<Models />} path="/models" />
           <Route element={<Profile />} path="/profile" />
           <Route element={<Navigate replace to="/dashboard" />} path="*" />
         </Route>

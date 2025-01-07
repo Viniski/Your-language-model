@@ -15,9 +15,7 @@ const DashboardNewChatDialog = ({
       <FormattedMessage id="Dashboard.ChatNew.Dialog.Title" />
     </AppDialog.Title>
     <AppDialog.Description className="mb-8 flex flex-col gap-2">
-      <p>
-        <FormattedMessage id="Dashboard.ChatNew.Dialog.Description" />
-      </p>
+      <FormattedMessage id="Dashboard.ChatNew.Dialog.Description" />
     </AppDialog.Description>
     <AppDialog.Actions>
       <AppButton color="003" variant="outlined" onClick={onConfirm}>

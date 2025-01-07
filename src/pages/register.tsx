@@ -52,7 +52,7 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
     },
   ] as const;
 
-  const useRegisterUser = useMutation({
+  const registerUserMutation = useMutation({
     mutationFn: async (values: FormData) =>
       supabase.auth
         .signUp({
@@ -71,23 +71,23 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
         .then(({ data }) => data),
   });
 
-  if (useRegisterUser.isSuccess || useRegisterUser.isError) {
+  if (registerUserMutation.isSuccess || registerUserMutation.isError) {
     return (
       <PublicContainer className="items-center gap-8">
         <img
           alt=""
           className="max-w-full"
           height={148}
-          src={useRegisterUser.isError ? '/images/action-error.svg' : '/images/action-success.svg'}
+          src={registerUserMutation.isError ? '/images/action-error.svg' : '/images/action-success.svg'}
           width={262}
         />
         <div className="mb-6 flex flex-col items-center gap-2.5">
           <PublicContainer.Title className="whitespace-pre-line text-center">
-            <FormattedMessage id={useRegisterUser.isError ? 'Register.Error.Title' : 'Register.Success.Title'} />
+            <FormattedMessage id={registerUserMutation.isError ? 'Register.Error.Title' : 'Register.Success.Title'} />
           </PublicContainer.Title>
           <p className="text-center text-gray-300">
             <FormattedMessage
-              id={useRegisterUser.isError ? 'Register.Error.Description' : 'Register.Success.Description'}
+              id={registerUserMutation.isError ? 'Register.Error.Description' : 'Register.Success.Description'}
             />
           </p>
         </div>
@@ -104,7 +104,7 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
         <PublicContainer.Title>
           <FormattedMessage id="Register.Title" />
         </PublicContainer.Title>
-        <form className="flex flex-col gap-8" onSubmit={form.handleSubmit((data) => useRegisterUser.mutate(data))}>
+        <form className="flex flex-col gap-8" onSubmit={form.handleSubmit((data) => registerUserMutation.mutate(data))}>
           <div className="flex flex-col gap-4">
             <h2 className="font-semibold">
               <FormattedMessage id="Register.ProfileDataTitle" />
@@ -187,7 +187,7 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
               />
             ))}
           </div>
-          <AppButton className="rounded-xl !py-4 !text-base" loading={useRegisterUser.isLoading} type="submit">
+          <AppButton className="rounded-xl !py-4 !text-base" loading={registerUserMutation.isLoading} type="submit">
             <FormattedMessage id="Common.Register" />
           </AppButton>
           {hasLoginLink && (

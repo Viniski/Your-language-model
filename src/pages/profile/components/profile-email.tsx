@@ -27,7 +27,7 @@ const ProfileEmail = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const useUpdateProfileEmail = useMutation({
+  const updateProfileEmailMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const { error } = await supabase.auth.updateUser({
         email: data.email,
@@ -57,7 +57,7 @@ const ProfileEmail = () => {
   return (
     <>
       <ProfileEmailVerifyDialog open={isVerifyEmailDialogOpen} onClose={toggleIsVerifyEmailDialogOpen} />
-      <FormAccordion title={intl.$t({ id: 'Profile.Email.Title' })} titleBarClassName="bg-007">
+      <FormAccordion title={intl.$t({ id: 'Profile.Email.Title' })}>
         <FormDivider />
         <div className="grid items-center gap-6 md:grid-cols-2">
           <AppTextFieldForm
@@ -82,8 +82,8 @@ const ProfileEmail = () => {
           <AppButton
             color="003"
             disabled={!isEditing}
-            loading={useUpdateProfileEmail.isLoading}
-            onClick={form.handleSubmit((values: FormData) => useUpdateProfileEmail.mutate(values))}
+            loading={updateProfileEmailMutation.isLoading}
+            onClick={form.handleSubmit((values: FormData) => updateProfileEmailMutation.mutate(values))}
           >
             <FormattedMessage id="Common.SaveChanges" />
           </AppButton>

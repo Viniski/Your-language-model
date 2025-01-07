@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex grow flex-col">
-      <div className="mb-8 flex flex-col gap-8 md:gap-0">
+      <div className="mb-8 flex flex-col gap-2">
         <PageTitle>
           <FormattedMessage id="Dashboard.Title" />
         </PageTitle>

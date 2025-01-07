@@ -8,8 +8,10 @@ interface State {
   setLanguage: (language: Language) => void;
 }
 
+export const DEFAULT_LANGUAGE = 'pl';
+
 const getLanguageWithFallback = (language: Language) =>
-  Object.keys(languages).includes(language) ? (language as State['language']) : 'pl';
+  Object.keys(languages).includes(language) ? (language as State['language']) : DEFAULT_LANGUAGE;
 
 const useLanguageStore = create<State>()((set) => ({
   language: getLanguageWithFallback(navigator.language.split('-')[0] as Language),

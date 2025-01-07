@@ -27,8 +27,8 @@ const Profile = () => {
     queryFn: fetchProfile,
   });
 
-  if (currentUserQuery.isLoading) {
-    <AppLoader />;
+  if (currentUserQuery.isLoading || !currentUserQuery.data) {
+    return <AppLoader />;
   }
 
   return (
@@ -37,7 +37,7 @@ const Profile = () => {
         <FormattedMessage id="Profile.Title" />
       </PageTitle>
       <div className="flex flex-col gap-8 md:gap-0 md:rounded-[0.625rem] md:border md:border-gray-50/50 md:bg-[--bg-primary]">
-        {currentUserQuery.data && <ProfileSettings user={currentUserQuery.data} />}
+        <ProfileSettings user={currentUserQuery.data} />
         <Divider />
         <ProfilePassword />
         <Divider />

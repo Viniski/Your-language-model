@@ -1,7 +1,7 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { faMap, faUser } from '@fortawesome/free-regular-svg-icons';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faCommentNodes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemButton } from '@mui/material';
 import { useIsMobile, useLogout } from '@/hooks';
@@ -14,6 +14,7 @@ const NavigationMenu = ({ user, toggleNavigation }: { user: NullableUser; toggle
 
   const links = [
     { to: '/features', icon: faMap, text: intl.$t({ id: 'Nav.Dashboard' }) },
+    { to: '/models', icon: faCommentNodes, text: intl.$t({ id: 'Nav.Models' }) },
     { to: '/profile', icon: faUser, text: intl.$t({ id: 'Nav.Profile' }) },
   ];
 

@@ -8,6 +8,7 @@ import supabase from '@/api/supabase-client';
 import { AppButton, AppTextFieldForm } from '@/components';
 import { useNavigationTransitionConfirmation } from '@/components/navigation-transition-confirmation';
 import { useLanguageStore } from '@/contexts/intl-provider';
+import { DEFAULT_LANGUAGE } from '@/contexts/intl-provider/use-language-store';
 import languages from '@/data/languages.json';
 import QueryKey from '@/enums/query-key';
 import { NullableUser } from '@/types';
@@ -34,14 +35,14 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
       lastName: user?.last_name || '',
       organization: user?.organization || '',
       phone: user?.phone || '',
-      language: user?.language || 'pl',
+      language: user?.language || DEFAULT_LANGUAGE,
     },
     resolver: zodResolver(formSchema),
   });
   const isEditing = form.formState.isDirty;
   useNavigationTransitionConfirmation(isEditing);
 
-  const useUpdateProfileSettings = useMutation({
+  const updateProfileSettingsMuttion = useMutation({
     mutationFn: async (data: FormData) => {
       const currentUser = await supabase.auth.getUser();
 
@@ -76,7 +77,7 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
   });
 
   return (
-    <FormAccordion title={intl.$t({ id: 'Profile.Settings.Title' })} titleBarClassName="bg-primary">
+    <FormAccordion title={intl.$t({ id: 'Profile.Settings.Title' })}>
       <FormDivider />
       <div className="grid gap-6 md:grid-cols-2">
         <AppTextFieldForm control={form.control} field="firstName" label={intl.$t({ id: 'Form.FirstName' })} />
@@ -92,7 +93,7 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
         >
           {Object.entries(languages).map(([key, label]) => (
             <option key={key} value={key}>
-              {label}
+              <FormattedMessage id={`Form.Language.${label as 'polski' | 'English'}`} />
             </option>
           ))}
         </AppTextFieldForm>
@@ -102,8 +103,8 @@ const ProfileSettings = ({ user }: { user: NullableUser }) => {
         <AppButton
           color="003"
           disabled={!isEditing}
-          loading={useUpdateProfileSettings.isLoading}
-          onClick={form.handleSubmit((values) => useUpdateProfileSettings.mutate(values))}
+          loading={updateProfileSettingsMuttion.isLoading}
+          onClick={form.handleSubmit((values) => updateProfileSettingsMuttion.mutate(values))}
         >
           <FormattedMessage id="Common.SaveChanges" />
         </AppButton>
