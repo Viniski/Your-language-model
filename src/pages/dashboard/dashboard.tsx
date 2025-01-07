@@ -19,7 +19,7 @@ const Dashboard = () => {
         </p>
       </div>
       <DashboardList.Container>
-        <DashboardList.Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <DashboardList.AppTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab === 'default' ? <DashboardChat /> : <DashboardPrompt />}
       </DashboardList.Container>
     </div>

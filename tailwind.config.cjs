@@ -30,5 +30,5 @@ module.exports = {
       colors: colors.base,
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [],
 };
