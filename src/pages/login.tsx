@@ -37,15 +37,19 @@ const Login = () => {
           autoFocus
           control={form.control}
           field="email"
-          inputProps={{ autoComplete: 'email' }}
           label={intl.$t({ id: 'Form.Email' })}
           type="email"
+          slotProps={{
+            htmlInput: { autoComplete: 'email' },
+          }}
         />
         <AppTextFieldFormPassword
           control={form.control}
           field="password"
-          inputProps={{ autoComplete: 'current-password' }}
           label={intl.$t({ id: 'Form.Password' })}
+          slotProps={{
+            htmlInput: { autoComplete: 'current-password' },
+          }}
         />
       </div>
       <Link className="self-end font-semibold text-primary-500 no-underline" to="/forgotten">

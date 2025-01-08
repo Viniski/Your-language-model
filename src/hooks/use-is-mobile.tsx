@@ -1,5 +1,4 @@
-import { useMediaQuery, useTheme } from '@mui/material';
-import { Breakpoint } from '@mui/system/createTheme/createBreakpoints';
+import { Breakpoint, useMediaQuery, useTheme } from '@mui/material';
 
 const useIsMobile = (breakpoint?: Breakpoint) => {
   const theme = useTheme();

@@ -133,15 +133,19 @@ const Register = ({ initialEmail, hasLoginLink = true }: { initialEmail?: string
               <AppTextFieldForm
                 control={form.control}
                 field="email"
-                inputProps={{ autoComplete: 'email' }}
                 label={intl.$t({ id: 'Form.Email' })}
                 type="email"
+                slotProps={{
+                  htmlInput: { autoComplete: 'email' },
+                }}
               />
               <AppTextFieldFormPassword
                 control={form.control}
                 field="password"
-                inputProps={{ autoComplete: 'new-password' }}
                 label={intl.$t({ id: 'Form.Password' })}
+                slotProps={{
+                  htmlInput: { autoComplete: 'password' },
+                }}
               />
             </div>
           </div>

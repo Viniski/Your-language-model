@@ -57,8 +57,10 @@ const Forgotten = () => {
             className="mb-5"
             control={form.control}
             field="email"
-            inputProps={{ autoComplete: 'email' }}
             label={intl.$t({ id: 'Form.Email' })}
+            slotProps={{
+              htmlInput: { autoComplete: 'email' },
+            }}
           />
           <AppButton
             className="rounded-xl !py-4 !text-base !font-normal"

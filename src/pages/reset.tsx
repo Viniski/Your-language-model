@@ -77,8 +77,10 @@ const Reset = () => {
             className="mb-5"
             control={form.control}
             field="password"
-            inputProps={{ autoComplete: 'new-password' }}
             label={intl.$t({ id: 'Form.NewPassword' })}
+            slotProps={{
+              htmlInput: { autoComplete: 'new-password' },
+            }}
           />
           <AppButton
             className="mb-8 rounded-xl !py-4 !text-base !font-normal"

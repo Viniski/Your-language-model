@@ -56,6 +56,9 @@ const FormPassword = () => {
           control={form.control}
           field="newPassword"
           label={intl.$t({ id: 'Form.NewPassword' })}
+          slotProps={{
+            htmlInput: { autoComplete: 'new-password' },
+          }}
         />
       </div>
       <FormDivider />

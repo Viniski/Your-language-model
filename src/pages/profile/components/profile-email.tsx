@@ -65,6 +65,9 @@ const ProfileEmail = () => {
             field="email"
             label={intl.$t({ id: 'Form.NewEmail' })}
             type="email"
+            slotProps={{
+              htmlInput: { autoComplete: 'email' },
+            }}
           />
           <div className="flex flex-wrap justify-end gap-4">
             <AppButton
