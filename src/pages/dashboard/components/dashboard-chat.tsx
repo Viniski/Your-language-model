@@ -32,6 +32,7 @@ const DashboardChat = () => {
   const [isNewChatDialogOpen, toggleIsNewChatDialogOpen] = useReducer((value) => !value, false);
   const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const newChatButtonRef = useRef<HTMLButtonElement>(null);
 
   const responseGenerate = async (message: string) => {
     setIsTyping(true);
@@ -57,10 +58,16 @@ const DashboardChat = () => {
     setInputMessage('');
   };
 
-  const scrollToBottom = () => {
+  const scrollMessageToBottom = () => {
     const messagesContainer = messagesRef.current;
     if (messagesContainer) {
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (newChatButtonRef.current) {
+      newChatButtonRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   };
 
@@ -77,6 +84,7 @@ const DashboardChat = () => {
   };
 
   useEffect(() => {
+    scrollMessageToBottom();
     scrollToBottom();
   }, [chatMessages]);
 
@@ -90,7 +98,7 @@ const DashboardChat = () => {
       <div className="flex w-full flex-col gap-2">
         <div
           ref={messagesRef}
-          className="grid max-h-[500px] min-h-[200px] grid-cols-12 content-start gap-y-2 overflow-auto px-2"
+          className="grid max-h-[600px] min-h-[200px] grid-cols-12 content-start gap-y-2 overflow-auto px-2"
         >
           {chatMessages.length ? (
             chatMessages.map((chatMessage, index) => (
@@ -105,6 +113,7 @@ const DashboardChat = () => {
         </div>
         <div className="flex gap-2">
           <AppTextField
+            ref={messagesRef}
             className="w-full"
             placeholder={intl.$t({ id: 'Dashboard.ChatInputPlaceholder' })}
             value={inputMessage}
@@ -121,6 +130,7 @@ const DashboardChat = () => {
           </IconButton>
         </div>
         <AppButton
+          ref={newChatButtonRef}
           disableRipple
           className="self-center bg-transparent text-003"
           variant="text"
