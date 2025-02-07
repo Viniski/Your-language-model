@@ -6,17 +6,7 @@ module.exports = {
   },
   ignorePatterns: ['dist'],
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'unused-imports', 'no-relative-import-paths'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@tanstack/eslint-plugin-query/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'airbnb',
-    'airbnb-typescript',
-    'plugin:react/jsx-runtime',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:@tanstack/eslint-plugin-query/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:import/recommended', 'plugin:import/typescript', 'airbnb', 'airbnb-typescript', 'plugin:react/jsx-runtime', 'prettier', 'plugin:storybook/recommended'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     'consistent-return': 'off',
