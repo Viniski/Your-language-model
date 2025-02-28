@@ -5,7 +5,7 @@ https://your-language-model-sfn4.vercel.app/<br>
 <b>Experience the app in action here!</b>
 
 <b>Test profile:</b><br>
-E-mail: xajefad682@sfxeur.com<br> 
+E-mail: lipihax162@calmpros.com<br> 
 Password: CGEVo8sVWeHzLIN
 
 This application is a chat platform powered by OpenAI's gpt-4o-mini language model, offering conversational features. It includes user authentication and profile management through Supabase, allowing login, registration, and easy updates to personal details, password, and email address.
